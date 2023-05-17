@@ -31,9 +31,17 @@ Install the zip file in `storefront` folder and install theme
 
 #### Private app
 
-[The Shopify CLI](https://shopify.dev/docs/apps/tools/cli) connects to an app in your Partners dashboard. It provides environment variables, runs commands in parallel, and updates application URLs for easier development.
+Private app is Shopify app but create directly in shopify store. App can only be created and installed for that store only. You must create an app in your admin store dashboard. 
+ 1. Enter your store [app page](https://admin.shopify.com/store/eva-test-liam/settings/apps)
+ 2. Click on `Develop apps` if you haven't accept to create it, please accept that
+ 3. Click on `Create an apps` button on top right
+ 4. After enter app name go to `Configurations` and select `Admin API integration` to select `write_products, write_product_listings, read_customer, write_themes`
+ 5. Go to `API Credentials` click install after that note access token, secret app key, app key
+ 6. Duplicate `env.example` and enter configuration necessary
 
-Install package for the private app
+ Note: For the DB, it will be your local database installed on your computer or you can replace it if you intend to deploy it to a server.
+
+#### Install package for the private app
 
 Using yarn:
 
@@ -46,8 +54,11 @@ Using npm:
 ```shell
 npm install
 ```
+#### Migrating database
 
 After all package have been installed in `node_modules`, start migrate db. 
+
+Using yarn
 
 ```shell
 yarn migrate
@@ -59,7 +70,7 @@ Using npm:
 npm run migrate
 ```
 
-
+#### Deployment
 You can develop locally using your preferred package manager. Run one of the following commands from the root of your app.
 
 Using yarn:
@@ -75,8 +86,6 @@ npm run dev
 ```
 
 Open the URL generated in your console. It will show app basic feature.
-
-## Deployment
 
 Note: This is a private app so app can't have theme app extension which is better for store owner customize. 
 
