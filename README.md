@@ -1,22 +1,7 @@
-# Shopify App Template - Node
+# EVA test
 
-This is a template for building a [Shopify app](https://shopify.dev/docs/apps/getting-started) using Node and React. It contains the basics for building a Shopify app.
+Test for Create a REST API that allows customers to leave products on each product and stores them in a database, then display the comments on each product page.
 
-Rather than cloning this repo, you can use your preferred package manager and the Shopify CLI with [these steps](#installing-the-template).
-
-## Benefits
-
-Shopify apps are built on a variety of Shopify tools to create a great merchant experience. The [create an app](https://shopify.dev/docs/apps/getting-started/create) tutorial in our developer documentation will guide you through creating a Shopify app using this template.
-
-The Node app template comes with the following out-of-the-box functionality:
-
-- OAuth: Installing the app and granting permissions
-- GraphQL Admin API: Querying or mutating Shopify admin data
-- REST Admin API: Resource classes to interact with the API
-- Shopify-specific tooling:
-  - AppBridge
-  - Polaris
-  - Webhooks
 
 ## Tech Stack
 
@@ -93,9 +78,9 @@ Open the URL generated in your console. It will show app basic feature.
 
 ## Deployment
 
+Note: This is a private app so app can't have theme app extension which is better for store owner customize. 
 
-
-### Application Storage
+After install to the main theme. There will have a `sections/comment.liquid` file in theme. Add file to main theme in order to use
 
 
 ## Hosting
