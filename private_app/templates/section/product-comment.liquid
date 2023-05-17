@@ -1,0 +1,132 @@
+{%- style -%}
+  #comment-section {
+    padding: 100px 0;
+    background: #ededed;
+    margin: 30px 0;
+  }
+
+  #comment-form {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  #name {
+    line-height: 24px;
+    font-size: 16px;
+    padding: 8px 10px;
+  }
+  button {
+    width: fit-content;
+    padding: 15px 30px;
+    font-weight: 600;
+    margin-top: 24px;
+    background: #cdcdcd;
+    border: none;
+    cursor: pointer;
+  }
+  #comment {
+    min-height: 100px;
+    line-height: 24px;
+    font-size: 16px;
+    padding: 8px 10px;
+  }
+  input:focus-visible, textarea:focus-visible{
+    outline:none;
+    box-shadow:none;
+    outline-offset:none;
+  }
+  ul#comment-content {
+    display:flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .comment-data {
+    flex-basis: 100%;
+    display: inline-grid;
+    margin: 15px 0;
+  }
+{%- endstyle -%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+
+{%- assign customerId = customer.id | default: '0' -%}
+{%- assign customerName = customer.name | default: 'Guest' -%}
+<div id="comment-section">
+  <form
+    id="comment-form"
+    method="POST"
+    action="/comments">
+    <input type='hidden' name='user' value="{{ customerId }}"/>
+    <input type='hidden' name='userName' value="{{ customerName }}"/>
+    <input type='hidden' name='product' value="{{ product.handle }}"/>
+    <label for="comment">Your Comment:</label>
+    <textarea
+      id="comment"
+      name="content"
+      required></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+  <div class="comment-wrapper">
+    <ul id="comment-content">
+
+    </ul>
+  </div> 
+</div>
+<script>
+  document.getElementById('comment-form').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    const formData = new FormData(this);
+    const body = JSON.stringify(Object.fromEntries(formData.entries()))
+  
+          $.ajax({
+            url: 'process.env/v1/comment/', 
+            method: "POST",
+            contentType: 'application/json',
+            data: body,
+            success: function(data){
+                  $("#comment-content").prepend(`
+                    <li class="comment-data">
+                      <span><b>${data.userName}</b> had commented on <b>${new Date(data.createdAt).toJSON().slice(0,10).replace(/-/g,'/')}</b></span>
+                      <span><strong>${data.content}</strong></span>
+                    </li>
+                  `)
+            }
+        })
+  });
+
+
+    $(document).ready(function(){
+        $.ajax({
+            url: 'process.env/v1/comment/' + '{{ product.handle }}', 
+            success: function(result){
+                result.map((data) => {
+                  $("#comment-content").append(`
+                    <li class="comment-data">
+                      <span><b>${data.userName}</b> had commented on <b>${new Date(data.createdAt).toJSON().slice(0,10).replace(/-/g,'/')}</b></span>
+                      <span><strong>${data.content}</strong></span>
+                    </li>
+                  `)
+                })
+            }
+        })
+    });
+</script>
+
+{% schema %}
+  {
+    "name": "Comment section",
+    "tag": "section",
+    "class": "section",
+    "settings": [],
+    "blocks": [],
+    "presets": [
+      {
+        "name": "Comment section",
+        "blocks": []
+      }
+    ]
+  }
+{% endschema %}
